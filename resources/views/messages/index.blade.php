@@ -28,6 +28,6 @@
         <div class="input-group-prepend">
             <span class="input-group-text"><i class="fa fa-send"></i></span>
         </div>
-        <input type="text" class="form-control" placeholder="Enter text here...">
+        <input type="text" class="form-control write_message" placeholder="Enter text here...">
     </div>
 </div>

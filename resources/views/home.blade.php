@@ -30,25 +30,20 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">{{ __('Dashboard') }}</div>
-
+                <div class="card" style="height: 600px">
                     <div class="card-body">
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('status') }}
                             </div>
                         @endif
-
-                        {{ __('You are logged in!') }}
-
                         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
                             rel="stylesheet" />
 
                         <div class="container">
                             <div class="row clearfix">
                                 <div class="col-lg-12">
-                                    <div class="card chat-app">
+                                    <div class=" chat-app">
                                         <div id="plist" class="people-list">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -133,6 +128,30 @@
                         $('#messages').html(response);
                     }
                 });
+            });
+            $(document).on('keyup', '.write_message', function(e) {
+                var message = $(this).val();
+                if (e.keyCode == 13 && message != '' && recever_id != '') {
+                    $(this).val('');
+                    $.ajax({
+                        type: "post",
+                        url: "{{ url('message') }}",
+                        cache: false,
+                        data: {
+                            recever_id: recever_id,
+                            message: message
+                        },
+                        success: function(response) {
+
+                        },
+                        error: function(error) {
+
+                        },
+                        complete: function(done) {
+
+                        }
+                    });
+                }
             });
         });
 

@@ -49,4 +49,9 @@ class HomeController extends Controller
         // dd($messages);
         return view('messages.index', ['messages' => $messages]);
     }
+
+    public function sendMessage(Request $request)
+    {
+        # code...
+    }
 }
