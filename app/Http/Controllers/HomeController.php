@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Message;
+use App\Events\MessageEvent;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,11 +53,18 @@ class HomeController extends Controller
 
     public function sendMessage(Request $request)
     {
+        $from = Auth::id();
+        $to = $request->recever_id;
+
         $data = new Message();
-        $data->from = Auth::id();
+        $data->from = $from;
         $data->to = $request->recever_id;
         $data->message = $request->message;
         $data->is_read = 0;
         $data->save();
+
+
+        event(new MessageEvent($from, $to));
+        return ['success' => true];
     }
 }

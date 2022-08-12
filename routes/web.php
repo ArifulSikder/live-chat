@@ -1,6 +1,6 @@
 <?php
 
-use App\Events\Message;
+use App\Events\MessageEvent;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +24,6 @@ Route::post('send-message', function (Request $request) {
         $user_id = $request->user_id;
     }
     $user = User::findOrFail($request->user_id);
-    event(new Message($user->name, $request->messeges, $user_id, $admin));
+    event(new MessageEvent($user->name, $request->messeges, $user_id, $admin));
     return ['success' => true];
 });

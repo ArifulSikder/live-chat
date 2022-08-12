@@ -113,9 +113,10 @@
 
 @section('script')
     <script>
+        var recever_id = '';
+        var my_id = '{{ Auth::id() }}';
         $(document).ready(function() {
-            var recever_id = '';
-            var my_id = '{{ Auth::id() }}';
+
             $('.user').click(function(e) {
                 e.preventDefault();
                 $('.user').removeClass('active');
@@ -134,6 +135,15 @@
                     }
                 });
             });
+            window.Echo.channel('chat').listen('.message', function(e) {
+                console.log(e.from)
+                if (my_id == e.from) {
+                    alert('sender')
+                } else {
+
+                }
+            });
+
             $(document).on('keyup', '.write_message', function(e) {
                 var message = $(this).val();
                 if (e.keyCode == 13 && message != '' && recever_id != '') {
