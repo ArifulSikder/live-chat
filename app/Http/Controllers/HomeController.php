@@ -52,6 +52,11 @@ class HomeController extends Controller
 
     public function sendMessage(Request $request)
     {
-        # code...
+        $data = new Message();
+        $data->from = Auth::id();
+        $data->to = $request->recever_id;
+        $data->message = $request->message;
+        $data->is_read = 0;
+        $data->save();
     }
 }

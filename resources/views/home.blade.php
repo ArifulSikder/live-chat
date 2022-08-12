@@ -26,6 +26,11 @@
             height: 590px;
             overflow: scroll;
         }
+
+        .chat-history {
+            height: 442px;
+            overflow: scroll;
+        }
     </style>
     <div class="container">
         <div class="row justify-content-center">
@@ -137,12 +142,15 @@
                         type: "post",
                         url: "{{ url('message') }}",
                         cache: false,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
                         data: {
                             recever_id: recever_id,
                             message: message
                         },
                         success: function(response) {
-
+                            console.log(response)
                         },
                         error: function(error) {
 
