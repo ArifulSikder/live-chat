@@ -132,15 +132,20 @@
                     },
                     success: function(response) {
                         $('#messages').html(response);
+                        scrollToBottom();
                     }
                 });
             });
             window.Echo.channel('chat').listen('.message', function(e) {
                 console.log(e.from)
                 if (my_id == e.from) {
-                    alert('sender')
-                } else {
+                    $('#' + e.to).click();
+                } else if (my_id == e.to) {
+                    if (recever_id == e.from) {
+                        $('#' + e.from).click();
+                    } else {
 
+                    }
                 }
             });
 
@@ -159,19 +164,21 @@
                             recever_id: recever_id,
                             message: message
                         },
-                        success: function(response) {
-                            console.log(response)
-                        },
-                        error: function(error) {
-
-                        },
+                        success: function(response) {},
+                        error: function(error) {},
                         complete: function(done) {
-
+                            scrollToBottom();
                         }
                     });
                 }
             });
         });
+
+        function scrollToBottom() {
+            $('.chat-history').animate({
+                scrollTop: $('.chat-history').get(0).scrollHeight
+            }, 50)
+        }
 
         function sendMessage() {
             let user_id = $('#user_id').val();

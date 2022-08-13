@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('public/build/assets/app.1232c7a5.css') }}">
     <!-- Scripts -->
-    <script src="{{ asset('public/build/assets/app.f2d7f1f2.js') }}"></script>
+    <script src="{{ asset('public/build/assets/app.62983b41.js') }}"></script>
     <style>
         body {
             background-color: #f4f7f6;
