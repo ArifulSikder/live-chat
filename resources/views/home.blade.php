@@ -31,6 +31,16 @@
             height: 442px;
             overflow: scroll;
         }
+
+        span.pending {
+            background: green;
+            color: white;
+            border-radius: 50%;
+            padding: 3px;
+            font-size: 9px;
+            position: absolute;
+            left: 33px;
+        }
     </style>
     <div class="container">
         <div class="row justify-content-center">
@@ -58,7 +68,25 @@
                                             </div>
                                             <ul class="list-unstyled chat-list mt-2 mb-0">
                                                 @foreach ($users as $user)
+                                                    @php
+                                                        $user_id = $user->id;
+                                                        $my_id = Auth::id();
+                                                        $messageData = App\Models\Message::where(function ($query) use ($user_id, $my_id) {
+                                                            $query
+                                                                ->where('from', $user_id)
+                                                                ->where('to', $my_id)
+                                                                ->where('is_read', 0);
+                                                        })
+                                                            ->orWhere(function ($query) use ($user_id, $my_id) {
+                                                                $query
+                                                                    ->where('from', $my_id)
+                                                                    ->where('to', $user_id)
+                                                                    ->where('is_read', 0);
+                                                            })
+                                                            ->count();
+                                                    @endphp
                                                     <li class="clearfix user" id="{{ $user->id }}">
+                                                        <span class="pending">{{ $messageData }}</span>
                                                         <img src="{{ $user->avatar }}" alt="avatar">
                                                         <div class="about">
                                                             <div class="name">{{ $user->name }}</div>
@@ -112,18 +140,25 @@
                     success: function(response) {
                         $('#messages').html(response);
                         scrollToBottom();
+                        $('.pending').html(0);
                     }
                 });
             });
             window.Echo.channel('chat').listen('.message', function(e) {
-                console.log(e.from)
                 if (my_id == e.from) {
                     $('#' + e.to).click();
                 } else if (my_id == e.to) {
                     if (recever_id == e.from) {
                         $('#' + e.from).click();
                     } else {
-
+                        // if receiver is not seleted, add notification for that user
+                        var pending = parseInt($('#' + e.from).find('.pending').html());
+                        if (pending) {
+                            $('#' + e.from).find('.pending').html(pending + 1);
+                        } else {
+                            $('#' + e.from).find('.pending').html(pending + 1);
+                            // $('#' + e.from).append('<span class="pending">1</span>');
+                        }
                     }
                 }
             });
@@ -173,12 +208,8 @@
                 messeges: messeges
             }
             axios.post(url, data)
-                .then(function(success) {
-                    console.log(success)
-                })
-                .catch(function(error) {
-                    console.log(error)
-                });
+                .then(function(success) {})
+                .catch(function(error) {});
         }
     </script>
 @endsection
