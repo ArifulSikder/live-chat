@@ -12,7 +12,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('user');
 Route::get('/message/{id}', [App\Http\Controllers\HomeController::class, 'getMessage'])->name('message');
 Route::post('/message', [App\Http\Controllers\HomeController::class, 'sendMessage'])->name('message');
 Route::post('send-message', function (Request $request) {

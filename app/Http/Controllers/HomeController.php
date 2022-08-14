@@ -35,7 +35,6 @@ class HomeController extends Controller
     {
 
         $my_id = Auth::id();
-        // dd($user_id, $my_id);
         // Get all message from selected user
         $messages = Message::where(function ($query) use ($user_id, $my_id) {
             $query->where('from', $user_id)->where('to', $my_id);
@@ -44,11 +43,14 @@ class HomeController extends Controller
         })->get();
 
 
+        $user = User::findOrFail($user_id);
+        $myId = User::findOrFail($my_id);
+
         // $messages = Message::where('from', $user_id)->where('to', $my_id)
         //     ->orWhere('to', $user_id)->where('from', $my_id)
         //     ->get();
         // dd($messages);
-        return view('messages.index', ['messages' => $messages]);
+        return view('messages.index', ['messages' => $messages,'user'=> $user,'myId'=> $myId]);
     }
 
     public function sendMessage(Request $request)
