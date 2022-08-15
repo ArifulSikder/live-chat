@@ -13,9 +13,9 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('public/build/assets/app.1232c7a5.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/build/assets/app.css') }}">
     <!-- Scripts -->
-    <script src="{{ asset('public/build/assets/app.62983b41.js') }}"></script>
+    <script src="{{ asset('public/build/assets/app.js') }}"></script>
     <style>
         body {
             background-color: #f4f7f6;
