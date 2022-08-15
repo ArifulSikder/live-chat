@@ -59,3 +59,18 @@ class MessageEvent implements ShouldBroadcast
         return 'message';
     }
 }
+
+
+**Then go to the resources/js/bootstrap.js file and write the below code**
+
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
+
+window.Pusher = Pusher;
+
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: import.meta.env.VITE_PUSHER_APP_KEY,
+    cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
+    forceTLS: true
+});
