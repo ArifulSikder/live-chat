@@ -15,7 +15,7 @@ If you plan to broadcast your events using Pusher Channels, you should install t
 
 Next, you should configure your Pusher Channels credentials in the config/broadcasting.php configuration file. An example Pusher Channels configuration is already included in this file, allowing you to quickly specify your key, secret, and application ID. Typically, these values should be set via the PUSHER_APP_KEY, PUSHER_APP_SECRET, and PUSHER_APP_ID environment variables:
 
-## Environmetn variables
+## Environment variables
 
 PUSHER_APP_ID=your-pusher-app-id
 PUSHER_APP_KEY=your-pusher-key
