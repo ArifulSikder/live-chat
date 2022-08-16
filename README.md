@@ -18,7 +18,7 @@ If you plan to broadcast your events using Pusher Channels, you should install t
 After That Run the following command:
 
     {
-    npm install --save-dev laravel-echo pusher-js
+       npm install --save-dev laravel-echo pusher-js
     }
 
 Next, you should configure your Pusher Channels credentials in the **config/broadcasting.php** configuration file. An example Pusher Channels configuration is already included in this file, allowing you to quickly specify your key, secret, and application ID. Typically, these values should be set via the PUSHER_APP_KEY, PUSHER_APP_SECRET, and PUSHER_APP_ID environment variables:
@@ -41,6 +41,27 @@ Next, you will need to change your broadcast driver to pusher in your **.env** f
 **Then make a event by using the following command**
 
 -   php artisan make:event EventName
+
+**Then pass data in the database and event**
+
+        {
+            public function sendMessage(Request $request)
+            {
+                $from = Auth::id();
+                $to = $request->recever_id;
+
+                $data = new Message();
+                $data->from = $from;
+                $data->to = $request->recever_id;
+                $data->message = $request->message;
+                $data->is_read = 0;
+                $data->save();
+
+
+                event(new MessageEvent($from, $to));
+                return ['success' => true];
+            }
+        }
 
 **After that configure the event**
 
