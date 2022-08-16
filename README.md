@@ -9,6 +9,10 @@
 
 ## Documentation
 
+First of all install a laravel project. Then install a authentication system like, auth, breze, Jetstream etc.
+Then you need a model, Called **Message**.
+
+Then,
 If you plan to broadcast your events using Pusher Channels, you should install the Pusher Channels PHP SDK using the Composer package manager:
 
     {
