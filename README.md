@@ -11,14 +11,16 @@
 
 If you plan to broadcast your events using Pusher Channels, you should install the Pusher Channels PHP SDK using the Composer package manager:
 
-{
-[composer require pusher/pusher-php-server.
-}
+    {
+       composer require pusher/pusher-php-server.
+    }
 
 After That Run the following command:
-{
-npm install --save-dev laravel-echo pusher-js
-}
+
+    {
+    npm install --save-dev laravel-echo pusher-js
+    }
+
 Next, you should configure your Pusher Channels credentials in the **config/broadcasting.php** configuration file. An example Pusher Channels configuration is already included in this file, allowing you to quickly specify your key, secret, and application ID. Typically, these values should be set via the PUSHER_APP_KEY, PUSHER_APP_SECRET, and PUSHER_APP_ID environment variables:
 
 ## Environment variables
