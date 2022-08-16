@@ -44,7 +44,6 @@ Next, you will need to change your broadcast driver to pusher in your **.env** f
 
 **Then pass data in the database and event**
 
-        {
             public function sendMessage(Request $request)
             {
                 $from = Auth::id();
@@ -61,7 +60,6 @@ Next, you will need to change your broadcast driver to pusher in your **.env** f
                 event(new MessageEvent($from, $to));
                 return ['success' => true];
             }
-        }
 
 **After that configure the event**
 
@@ -91,7 +89,6 @@ class MessageEvent implements ShouldBroadcast
 
 **Then go to the resources/js/bootstrap.js file and write the below code**
 
-    {
       import Echo from 'laravel-echo';
         import Pusher from 'pusher-js';
 
@@ -103,4 +100,3 @@ class MessageEvent implements ShouldBroadcast
             cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
             forceTLS: true
         });
-    }
