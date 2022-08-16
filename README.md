@@ -66,27 +66,28 @@ Next, you will need to change your broadcast driver to pusher in your **.env** f
 **After that configure the event**
 
 class MessageEvent implements ShouldBroadcast
-{
-use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $from;
-    public $to;
-    public function __construct($from, $to)
     {
-        $this->from = $from;
-        $this->to = $to;
-    }
+       use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public function broadcastOn()
-    {
-        return new Channel('chat');
-    }
-    public function broadcastAs()
-    {
-        return 'message';
-    }
+        public $from;
+        public $to;
+        public function __construct($from, $to)
+        {
+            $this->from = $from;
+            $this->to = $to;
+        }
 
-}
+        public function broadcastOn()
+        {
+            return new Channel('chat');
+        }
+        public function broadcastAs()
+        {
+            return 'message';
+        }
+
+    }
 
 **Then go to the resources/js/bootstrap.js file and write the below code**
 
