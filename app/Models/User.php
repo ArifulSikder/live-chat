@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Cache;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Message;
 
 class User extends Authenticatable
 {
@@ -45,8 +46,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // is onlive user 
-    function isOnline(){
-        return Cache::has('user-is-online-'.$this->id);
+    // is onlive user
+    function isOnline()
+    {
+        return Cache::has('user-is-online-' . $this->id);
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'from', 'id');
     }
 }

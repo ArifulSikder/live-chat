@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
 
 class HomeController extends Controller
 {
@@ -27,10 +28,10 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {    
-        // $users = DB::select("select users.id, users.name, users.avatar, users.email, count(is_read) as unread 
+    {
+        // $users = DB::select("select users.id, users.name, users.avatar, users.email, count(is_read) as unread
         // from users LEFT  JOIN  messages ON users.id = messages.from and is_read = 0 and messages.to = " . Auth::id() . "
-        // where users.id != " . Auth::id() . " 
+        // where users.id != " . Auth::id() . "
         // group by users.id, users.name, users.avatar, users.email");
 
         // $users = User::select('users.*', DB::raw('count(is_read) as unread'))
@@ -48,10 +49,17 @@ class HomeController extends Controller
         //     ->where('users.id','!=', Auth::id())
         //     ->get();
 
-       
+        // ->whereDoesntHave('donorInfo', function (Builder $query) use($ToDate, $fromDate){
+        //     $query->whereBetween('donate_date', [ $ToDate, $fromDate]);
+        // });
+        $auth = Auth::id();
 
+        $users = User::where('id', '!=', $auth)
+            ->whereHas('messages', function (Builder $query) use ($auth) {
+                $query->where('from', '!=', $auth);
+            })->get();
 
-        $users = User::where('id', '!=', Auth::id())->get();
+        // dd($users);
         return view('home', compact('users'));
     }
 
@@ -59,7 +67,7 @@ class HomeController extends Controller
     {
 
         $my_id = Auth::id();
-        
+
         // Make read all unread message
         Message::where(['from' => $user_id, 'to' => $my_id])->update(['is_read' => 1]);
 
@@ -73,7 +81,7 @@ class HomeController extends Controller
         $user = User::findOrFail($user_id);
         $myId = User::findOrFail($my_id);
 
-        return view('messages.index', ['messages' => $messages,'user'=> $user,'myId'=> $myId]);
+        return view('messages.index', ['messages' => $messages, 'user' => $user, 'myId' => $myId]);
     }
 
     public function sendMessage(Request $request)
