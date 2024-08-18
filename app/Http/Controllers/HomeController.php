@@ -54,11 +54,20 @@ class HomeController extends Controller
         // });
         $auth = Auth::id();
 
-        $users = User::where('id', '!=', $auth)
-            ->whereHas('messages', function (Builder $query) use ($auth) {
-                $query->where('from', '!=', $auth);
-            })->get();
-
+        $users = User::select('users.id', 'users.name') // Select required fields
+        ->where('users.id', '!=', $auth)
+        ->with(['messages' => function ($query) use ($auth) {
+            $query->select('from', 'to', 'created_at')
+                  ->where('to', $auth); // Filter messages where the authenticated user is the recipient
+        }])
+        ->join(DB::raw('(SELECT `from` as user_id, MAX(created_at) as latest_message
+                          FROM messages
+                          WHERE `to` = '.$auth.'
+                          GROUP BY `from`) as latest_messages'),
+               'users.id', '=', 'latest_messages.user_id')
+        ->orderBy(DB::raw('CASE WHEN `users`.`id` = `latest_messages`.`user_id` THEN 0 ELSE 1 END'), 'asc')
+        ->orderBy('latest_messages.latest_message', 'desc') // Order by the most recent message timestamp
+        ->get();
         // dd($users);
         return view('home', compact('users'));
     }

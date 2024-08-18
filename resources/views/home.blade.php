@@ -83,11 +83,11 @@
                                                                     ->where('to', $user_id)
                                                                     ->where('is_read', 0);
                                                             })
-                                                            ->count();
+                                                            ->count(); 
                                                     @endphp
                                                     <li class="clearfix user" id="{{ $user->id }}">
                                                         <span class="pending">{{ $messageData }}</span>
-                                                        <img src="{{ $user->avatar }}" alt="avatar">
+                                                        <img src="{{ $user->avatar ?? "https://via.assets.so/movie.png?id=1&q=95&w=360&h=360&fit=fill" }}" alt="avatar">
                                                         <div class="about">
                                                             <div class="name">{{ $user->name }}</div>
                                                             @if ($user->isOnline())

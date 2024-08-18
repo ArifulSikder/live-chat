@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-lg-6">
             <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                <img src="{{ $user->avatar }}" alt="avatar">
+                <img src="{{ $user->avatar  ?? "https://via.assets.so/movie.png?id=1&q=95&w=360&h=360&fit=fill" }}" alt="avatar">
             </a>
             <div class="chat-about">
                 <h6 class="m-b-0">{{ $user->name }}</h6>
